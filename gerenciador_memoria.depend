@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1525642024 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"memoria.h"
+
+1525642071 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
+
+1525642904 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
+	<stdio.h>
+	<stdlib.h>
+	"memoria.h"
+
