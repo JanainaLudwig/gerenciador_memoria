@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+#include <unistd.h>
+#include <conio.h>
 #include "memoria.h"
 
 /*
@@ -33,30 +36,40 @@ lista* cria_lista() {
 
 int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elemento)(lista *li, int tamanho_necessario)) {
     if(process->tamanho > MEMORIA_MAX) {
-        printf("O processo necessita de mais memória que o total... Não poderá ser alocado!");
+        printf("O processo necessita de mais memória que o total... Não poderá ser alocado!\n");
         return -1;
     }
     if(li == NULL) {
         return 0;
     }
     //Auxiliar receberá o elemento no qual o processo deve ser alocado
-    Elemento *aux, *no = (Elemento*) malloc(sizeof(Elemento));
-    if(no == NULL) {
+    Elemento *aux = buscar_elemento(li, process->tamanho);
+    if(aux == NULL) {
+        printf("Não há memória suficiente... Aguarde!\n");
         return 0;
     }
-    no->processo = process;
-    no->unidades_memoria = process->tamanho;
-    //Recebe o endereço de um elemento que tenha memória livre e precisará ser ajustado se aida sobrar espaço
-    aux = buscar_elemento(li, no->unidades_memoria);
-    if(aux == NULL) {
-        printf("Não há memória suficiente... Aguarde!");
+    //Se o processo utilizar menos quantidade de memória do que está livre, o elemento é "quebrado", mantendo parte da memória livre
+    if(aux->unidades_memoria != process->tamanho) {
+        //Novo espaço livre de memória
+        Elemento *no = (Elemento*) malloc(sizeof(Elemento));
+        if(no == NULL) {
+            return 0;
+        }
+        no->processo = NULL;
+        no->unidades_memoria = aux->unidades_memoria - process->tamanho;
+        no->ender_inicio = aux->ender_inicio + process->tamanho;
+        aux->unidades_memoria = process->tamanho;
+        //Ajusta os endereços (anteriores, próximos...)
+        if(aux->proximo != NULL) {
+            aux->proximo->anterior = no;
+        }
+        no->proximo = aux->proximo;
+        no->anterior = aux;
+        aux->proximo = no;
     }
-    if(aux->unidades_memoria == no->unidades_memoria) {
-        aux->processo = no->processo;
-        prin
-        return 1;
-    }
-    return 0;
+    aux->processo = process;
+    //printf("Processo alocado!\n");
+    return 1;
 }
 
 struct elemento* first_fit(lista *li, int tamanho_necessario){
@@ -73,7 +86,6 @@ struct elemento* first_fit(lista *li, int tamanho_necessario){
     return aux;
     //Se não encontrou nenhum elemento com espaço disponível, retornará NULL
 }
-
 
 struct elemento* worst_fit(lista *li, int tamanho_necessario) {
     //O endereço da auxiliar incia no primeiro disponível
@@ -94,60 +106,129 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario) {
     return aux;
 }
 
-
-
-/*
-int worst_fit(lista li, Processo *process) {
-    if(li != NULL) {
-        Elemento *no = (Elemento*) malloc(sizeof(Elemento));
-        no->processo = process;
-        no->unidades_memoria = process->tamanho;
-        //Memória totalmente livre (só há um elemento ocupando toda a memória)
-        if(li->proximo == NULL) {
-            if(no->unidades_memoria >= MEMORIA_MAX)
-                return -1;
-            no->anterior = NULL;
-            no->proximo = li;
-            no->ender_inicio = 0;
-            li->anterior = no;
-            li->ender_inicio = no->unidades_memoria;
-            li->unidades_memoria -= no->unidades_memoria;
-            li = no;
-            return 1;
-        } else {
-            while(li->proximo != NULL) {
-
-
+void percorre_memoria(lista *li) {
+    Elemento *no = (Elemento*) malloc(sizeof(Elemento));
+    no = *li;
+    while(no != NULL) {
+        if(no->processo != NULL) {
+            printf("Processo: %s\tTempo: %d\n", no->processo->nome, no->processo->tempo);
+            if(no->processo->tempo == 0) {
+                printf("Desalocar %s\n", no->processo->nome);
+                no->processo = NULL;
+                liberar_processo(li, no);
+            } else {
+                no->processo->tempo--;
             }
         }
+        no = no->proximo;
     }
-
-
+    sleep(1);
+    printf("-------------\n");
 }
 
-*/
+int liberar_processo(lista *li, Elemento *liberar) {
+    free(liberar->processo);
+    liberar->processo = NULL;
+    //Se for o primeiro da lista e o próximo for memória livre
+    /*if(liberar->anterior == NULL && liberar->proximo->processo == NULL) {
+        Elemento *aux = malloc(sizeof(Elemento*));
+        aux = liberar->proximo;
+        liberar->unidades_memoria += aux->unidades_memoria;
+        aux->proximo->anterior = liberar;
+        liberar->proximo = aux->proximo;
+        free(aux);
+        aux = NULL;
+    }*/
+    //Se existir um elemento antes do que deve ser liberado e ele for livre, une os dois
+    if(liberar->anterior != NULL && liberar->anterior->processo == NULL) {
+        liberar = liberar->anterior;
+        desfragmentar_livres(liberar);
+    }
+    if(liberar->proximo != NULL && liberar->proximo->processo == NULL) {
+        desfragmentar_livres(liberar);
+    }
+    return 1;
+}
 
-
-/*
-int worst_fit(lista li, int tamanho_processo, struct elemento *no) {
-    if(li != NULL) {
-        //Memória totalmente livre (só há um elemento ocupando toda a memória)
-        if(li->proximo == NULL) {
-            if(no->unidades_memoria < MEMORIA_MAX)
-                return -1;
-            no = li;
-            return 1;
+void desfragmentar_livres(Elemento *primeiro) {
+        Elemento *segundo = malloc(sizeof(Elemento*));
+        segundo = primeiro->proximo;
+        primeiro->unidades_memoria += segundo->unidades_memoria;
+        if(segundo->proximo != NULL) {
+            segundo->proximo->anterior = primeiro;
+            primeiro->proximo = segundo->proximo;
         } else {
-            while(li->proximo)
+            primeiro->proximo = NULL;
         }
-    }
+        free(segundo);
+        segundo = NULL;
 }
-*/
 
 void imprime(lista *li) {
     Elemento *no = *li;
     while(no != NULL) {
-        printf("Tamanho usado: %d\n", no->unidades_memoria);
+        if(no->processo != NULL) {
+            printf("Nome:%s\tTamanho usado: %d\n", no->processo->nome, no->unidades_memoria);
+        } else {
+            printf("Memória livre: %d\n", no->unidades_memoria);
+        }
         no = no->proximo;
     }
 }
+
+void desenha_memoria(lista *li) {
+    printf("\033[22;34m");
+    printf("\033[0m");
+    system("cls");
+    setlocale(LC_ALL, "C");
+    Elemento *no = *li;
+    int i, j = 0, cor = 1;
+    //textcolor(4);
+    //printf("\033[22;34m");
+    printf(" %4c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 187);
+    //printf("\033[0m");
+    while(no != NULL) {
+            if(cor == 1) {
+                    printf("\x1b[34m"); // AZUL
+                    cor--;
+               } else {
+                    printf("\x1b[32m"); // AZUL
+                    cor++;
+               }
+        for(i = 0; i < no->unidades_memoria; i++) {
+            setlocale(LC_ALL, "C");
+            if(no->processo != NULL) {
+               
+               printf("%3d %c%c%c%c%c%c%c%c%c%c", j, 186, 178, 178, 178, 178, 178, 178, 178, 178, 186);
+               printf("\x1b[0m");//reset cor
+               if(i == (int) (no->unidades_memoria-1)/2) {
+                    //setlocale(LC_ALL, "");
+                    printf("  %s\tTempo: %d", no->processo->nome, no->processo->tempo);
+                    if(no->processo->tempo == 0) printf(" DESALOCANDO...\n");
+                    else printf("\n");
+               } else {
+                    printf("\n");
+               }
+            } else {
+                printf("%3d %c%c%c%c%c%c%c%c%c%c\n", j, 186, 176, 176, 176, 176, 176, 176, 176, 176, 186);
+            }
+            j++;
+        }
+
+   /* printf("\033[22;34m");
+        printf(" %4c%c%c%c%c%c%c%c%c%c\n", 186, 196, 196, 196, 196, 196, 196, 196, 196, 186);
+        printf("\033[0m");*/
+        no = no->proximo;
+    }
+    printf(" %4c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 188);
+    setlocale(LC_ALL, "");
+    //textcolor(0);
+}
+
+
+
+
+
+
+
+

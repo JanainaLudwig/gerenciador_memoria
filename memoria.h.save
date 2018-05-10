@@ -1,24 +1,35 @@
-#define MEMORIA_MAX 64
+#define MEMORIA_MAX 32
 
 typedef struct processo_dados {
-    char nome[10];
+    char nome[20];
     int tamanho;
     int tempo;
 } Processo;
 
 typedef struct elemento* lista;
 
+
 lista* cria_lista();
 void imprime(lista *li);
+void desenha_memoria(lista *li);
 
-//O
-int alocar_processo(lista *li, Processo *process, (*buscar_elemento)(lista *li, int tamanho_necessario));
+//O último parâmetro é o método de gerenciamento de memória (first_fit, worst_fit...)
+int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elemento)(lista *li, int tamanho_necessario));
 
 //Buscam o endereço adequado para alocar um elemento
 struct elemento* first_fit(lista *li, int tamanho_necessario);
 struct elemento* worst_fit(lista *li, int tamanho_necessario);
-/*
-liberar_processo();
-imprime_lista();
-buscar memoria();
-*/
+
+void percorre_memoria(lista *li);
+
+int liberar_processo(lista *li, struct elemento *liberar);
+
+//Usado para unir um primeiro elemento livre ao próximo elemento (que deve ser livre)
+void desfragmentar_livres(struct elemento *primeiro);
+
+/*DEFINE FUNÇÕES PARA A FILA DE PROCESSOS*/
+
+typedef struct processo_dados* fila_processos;
+fila_processos* cria_fila();
+
+

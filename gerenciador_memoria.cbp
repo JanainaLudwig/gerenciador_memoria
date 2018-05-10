@@ -38,6 +38,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="memoria.h" />
+		<Unit filename="processos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="processos.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

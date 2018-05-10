@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct elementoP {
+    Processo *dados;
+    struct elemento* proximo;
+} ElementoP;
+
+fila_processos* cria_fila() {
+    fila_processos *fi = (fila_processos*) malloc(sizeof(fila_processos));
+    return fi;
+}
+
+
+int novo_processo(fila_processos* fila, char *nome, int tamanho, int tempo) {
+    ElementoP *no = (ElementoP*) malloc(sizeof(ElementoP));
+    ElementoP *aux = *li;
+    if(no == NULL) {
+        return 0;
+    }
+    strcpy(no->dados->nome, nome);
+    no->dados->tamanho = tamanho;
+    no->dados->tempo = tempo;
+    no->proximo = NULL;
+    if(aux == NULL) {
+        *li = no;
+        return 1;
+    }
+    while(aux->proximo != NULL) {
+        aux = aux->proximo;
+    }
+
+}
+
