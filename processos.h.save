@@ -4,7 +4,8 @@ typedef struct processo_dados {
     int tempo;
 } Processo;
 
-typedef struct* fila_processos;
+typedef struct elementoP* fila_processos;
 
 fila_processos* cria_fila();
 int novo_processo(fila_processos* fila, char *nome, int tamanho, int tempo);
+Processo* retira_processo(fila_processos* fila);

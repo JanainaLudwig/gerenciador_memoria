@@ -19,6 +19,7 @@ int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elem
 //Buscam o endereço adequado para alocar um elemento
 struct elemento* first_fit(lista *li, int tamanho_necessario);
 struct elemento* worst_fit(lista *li, int tamanho_necessario);
+//struct elemento* next_fit(lista *li, int tamanho_necessario);
 
 void percorre_memoria(lista *li);
 

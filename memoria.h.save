@@ -19,6 +19,7 @@ int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elem
 //Buscam o endereço adequado para alocar um elemento
 struct elemento* first_fit(lista *li, int tamanho_necessario);
 struct elemento* worst_fit(lista *li, int tamanho_necessario);
+struct elemento* worst_fit(lista *li, int tamanho_necessario);
 
 void percorre_memoria(lista *li);
 
@@ -27,9 +28,6 @@ int liberar_processo(lista *li, struct elemento *liberar);
 //Usado para unir um primeiro elemento livre ao próximo elemento (que deve ser livre)
 void desfragmentar_livres(struct elemento *primeiro);
 
-/*DEFINE FUNÇÕES PARA A FILA DE PROCESSOS*/
 
-typedef struct processo_dados* fila_processos;
-fila_processos* cria_fila();
 
 

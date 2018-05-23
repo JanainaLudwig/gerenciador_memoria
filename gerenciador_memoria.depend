@@ -1,14 +1,19 @@
 # depslib dependency file v1.0
-1525963136 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
+1526690999 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<locale.h>
+	<process.h>
+	<conio.h>
+	<windows.h>
+	<unistd.h>
 	"memoria.h"
+	"processos.h"
 
-1525824257 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
+1526688133 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
 
-1525963112 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
+1526688126 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
@@ -16,11 +21,12 @@
 	<conio.h>
 	"memoria.h"
 
-1525906125 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
+1526690937 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"processos.h"
+	"memoria.h"
 
-1525906111 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.h
+1526686290 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.h
 

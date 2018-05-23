@@ -106,14 +106,19 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario) {
     return aux;
 }
 
+/*
+struct elemento* next_fit(lista *li, int tamanho_necessario) {
+    static Elemento *inicio = *li;
+    inicio = first_fit(&inicio, tamanho_necessario);
+    return inicio;
+};*/
+
 void percorre_memoria(lista *li) {
     Elemento *no = (Elemento*) malloc(sizeof(Elemento));
     no = *li;
     while(no != NULL) {
         if(no->processo != NULL) {
-            printf("Processo: %s\tTempo: %d\n", no->processo->nome, no->processo->tempo);
             if(no->processo->tempo == 0) {
-                printf("Desalocar %s\n", no->processo->nome);
                 no->processo = NULL;
                 liberar_processo(li, no);
             } else {
@@ -123,22 +128,11 @@ void percorre_memoria(lista *li) {
         no = no->proximo;
     }
     sleep(1);
-    printf("-------------\n");
 }
 
 int liberar_processo(lista *li, Elemento *liberar) {
     free(liberar->processo);
     liberar->processo = NULL;
-    //Se for o primeiro da lista e o próximo for memória livre
-    /*if(liberar->anterior == NULL && liberar->proximo->processo == NULL) {
-        Elemento *aux = malloc(sizeof(Elemento*));
-        aux = liberar->proximo;
-        liberar->unidades_memoria += aux->unidades_memoria;
-        aux->proximo->anterior = liberar;
-        liberar->proximo = aux->proximo;
-        free(aux);
-        aux = NULL;
-    }*/
     //Se existir um elemento antes do que deve ser liberado e ele for livre, une os dois
     if(liberar->anterior != NULL && liberar->anterior->processo == NULL) {
         liberar = liberar->anterior;
@@ -177,16 +171,10 @@ void imprime(lista *li) {
 }
 
 void desenha_memoria(lista *li) {
-    printf("\033[22;34m");
-    printf("\033[0m");
-    system("cls");
     setlocale(LC_ALL, "C");
     Elemento *no = *li;
     int i, j = 0, cor = 1;
-    //textcolor(4);
-    //printf("\033[22;34m");
     printf(" %4c%c%c%c%c%c%c%c%c%c\n", 201, 205, 205, 205, 205, 205, 205, 205, 205, 187);
-    //printf("\033[0m");
     while(no != NULL) {
             if(cor == 1) {
                     printf("\x1b[34m"); // AZUL
@@ -216,21 +204,8 @@ void desenha_memoria(lista *li) {
             j++;
         }
     printf("\x1b[0m");//reset cor
-
-   /* printf("\033[22;34m");
-        printf(" %4c%c%c%c%c%c%c%c%c%c\n", 186, 196, 196, 196, 196, 196, 196, 196, 196, 186);
-        printf("\033[0m");*/
-        no = no->proximo;
+    no = no->proximo;
     }
     printf(" %4c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 188);
     setlocale(LC_ALL, "");
-    //textcolor(0);
 }
-
-
-
-
-
-
-
-
