@@ -19,10 +19,11 @@ typedef struct elemento {
     struct elemento     *proximo;
 } Elemento;
 
-lista* cria_lista() {
+lista* cria_lista(int tamanho) {
     lista* li = (lista*) malloc(sizeof(lista));
     if(li != NULL) {
         //Cria o primeiro elemento da lista: memória totalmente livre (inicia em 0 e possui o tamanho máximo da memoria)
+        MEMORIA_MAX = tamanho;
         Elemento *no = (Elemento*) malloc(sizeof(Elemento));
         no->proximo = NULL;
         no->anterior = NULL;
@@ -35,8 +36,8 @@ lista* cria_lista() {
 }
 
 int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elemento)(lista *li, int tamanho_necessario)) {
+    //O processo necessita de mais memória que o total...
     if(process->tamanho > MEMORIA_MAX) {
-        printf("O processo necessita de mais memória que o total... Não poderá ser alocado!\n");
         return -1;
     }
     if(li == NULL) {
@@ -45,10 +46,11 @@ int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elem
     //Auxiliar receberá o elemento no qual o processo deve ser alocado
     Elemento *aux = buscar_elemento(li, process->tamanho);
     if(aux == NULL) {
-        printf("Não há memória suficiente... Aguarde!\n");
+        //printf("Não há memória suficiente... Aguarde!\n");
+        //sleep(1);
         return 0;
     }
-    //Se o processo utilizar menos quantidade de memória do que está livre, o elemento é "quebrado", mantendo parte da memória livre
+    //Se o processo utilizar menos quantidade de memória do que está livre, o elemento é fragmentado, mantendo parte da memória livre
     if(aux->unidades_memoria != process->tamanho) {
         //Novo espaço livre de memória
         Elemento *no = (Elemento*) malloc(sizeof(Elemento));
@@ -108,10 +110,57 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario) {
 
 /*
 struct elemento* next_fit(lista *li, int tamanho_necessario) {
-    static Elemento *inicio = *li;
-    inicio = first_fit(&inicio, tamanho_necessario);
+    static Elemento *inicio = NULL;
+    if(inicio == NULL) {
+        inicio = *li;
+    }
+    inicio = first_fit(inicio, tamanho_necessario);
+    if(inicio == NULL) {
+        inicio = first_fit(&li, tamanho_necessario);
+    }
     return inicio;
-};*/
+}*/
+
+struct elemento* next_fit(lista *li, int tamanho_necessario) {
+    Elemento *inicio = *li, *aux;
+    static int ultimaPosicaoAlocada = 0;
+    if(inicio == NULL) {
+        return NULL;
+    }
+    if(inicio->proximo != NULL) {
+        while(inicio->proximo->ender_inicio < ultimaPosicaoAlocada) {
+            inicio = inicio->proximo;
+        }
+        aux = inicio->proximo;
+    }
+    inicio = first_fit(&inicio, tamanho_necessario);
+    if(inicio == NULL) {
+        inicio->proximo = NULL;
+        inicio = first_fit(li, tamanho_necessario);
+        inicio->proximo = aux;
+    }
+    ultimaPosicaoAlocada = inicio->unidades_memoria;
+    return inicio;
+}
+
+struct elemento* best_fit(lista *li, int tamanho_necessario) {
+    //O endereço da auxiliar incia no primeiro disponível
+    Elemento *aux = first_fit(li, tamanho_necessario);
+    //Se não houver nem um disponível, retorna NULL
+    if(aux == NULL) {
+        return NULL;
+    }
+    //O elemento atual é o próximo da lista
+    Elemento *atual = aux->proximo;
+    //Percorre até chegar ao final da lista
+    while(atual != NULL) {
+        if(atual->processo == NULL && atual->unidades_memoria >= tamanho_necessario && atual->unidades_memoria < aux->unidades_memoria) {
+            aux = atual;
+        }
+        atual = atual->proximo;
+    }
+    return aux;
+}
 
 void percorre_memoria(lista *li) {
     Elemento *no = (Elemento*) malloc(sizeof(Elemento));
