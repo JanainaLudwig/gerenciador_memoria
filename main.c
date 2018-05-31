@@ -94,7 +94,7 @@ int main(void)
 
     system("cls");
 
-    printf("Pressione ENTER a qualquer momento durante a execução para inserir um novo processo na fila.\n\n");
+    printf("Pressione ENTER a qualquer momento durante a execução para inserir um novo processo na fila.\n");
     printf("Se quiser que um processo tenha tempo infinito, o tempo deve ser negativo.\n\n");
 
     system("pause");
@@ -138,7 +138,7 @@ void iniciarFilaProcessos() {
     char nome[20];
     int tam, tempo;
 
-    printf("Nome do processo: ");
+    printf("\nNome do processo: ");
     scanf(" %[^\n]s", nome);
     printf("Tamanho do processo: ");
     scanf("%d", &tam);
@@ -172,13 +172,3 @@ void percorreFilaProcessos() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

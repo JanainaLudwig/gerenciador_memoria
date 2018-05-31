@@ -237,6 +237,7 @@ void desenha_memoria(lista *li) {
                }
             } else {
                 printf("\x1b[0m");//reset cor
+                setlocale(LC_ALL, "C");
                 printf("%3d %c%c%c%c%c%c%c%c%c%c\n", j, 186, 176, 176, 176, 176, 176, 176, 176, 176, 186);
             }
             j++;

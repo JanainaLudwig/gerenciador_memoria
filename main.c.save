@@ -68,8 +68,8 @@ int main(void)
         case '1':
             algMemoria = first_fit;
             break;
-        case '1':
-            algMemoria = first_fit;
+        case '2':
+            algMemoria = next_fit;
             break;
         case '3':
             algMemoria = best_fit;
@@ -94,7 +94,7 @@ int main(void)
 
     system("cls");
 
-    printf("Pressione ENTER a qualquer momento durante a execução para inserir um novo processo na fila.\n\n");
+    printf("Pressione ENTER a qualquer momento durante a execução para inserir um novo processo na fila.\n");
     printf("Se quiser que um processo tenha tempo infinito, o tempo deve ser negativo.\n\n");
 
     system("pause");
@@ -151,8 +151,8 @@ void iniciarFilaProcessos() {
 void percorreMemoria() {
     while(1) {
         if(imprimir) {
-            //system("cls");
-            //desenha_memoria(memoria);
+            system("cls");
+            desenha_memoria(memoria);
         }
         percorre_memoria(memoria);
     }
