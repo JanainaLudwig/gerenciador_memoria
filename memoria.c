@@ -108,38 +108,27 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario) {
     return aux;
 }
 
-/*
-struct elemento* next_fit(lista *li, int tamanho_necessario) {
-    static Elemento *inicio = NULL;
-    if(inicio == NULL) {
-        inicio = *li;
-    }
-    inicio = first_fit(inicio, tamanho_necessario);
-    if(inicio == NULL) {
-        inicio = first_fit(&li, tamanho_necessario);
-    }
-    return inicio;
-}*/
-
 struct elemento* next_fit(lista *li, int tamanho_necessario) {
     Elemento *inicio = *li, *aux;
     static int ultimaPosicaoAlocada = 0;
+
     if(inicio == NULL) {
         return NULL;
     }
-    if(inicio->proximo != NULL) {
-        while(inicio->proximo->ender_inicio < ultimaPosicaoAlocada) {
-            inicio = inicio->proximo;
-        }
-        aux = inicio->proximo;
+
+    while(inicio->proximo != NULL && inicio->proximo->ender_inicio <= ultimaPosicaoAlocada) {
+        inicio = inicio->proximo;
     }
     inicio = first_fit(&inicio, tamanho_necessario);
     if(inicio == NULL) {
         inicio->proximo = NULL;
         inicio = first_fit(li, tamanho_necessario);
-        inicio->proximo = aux;
     }
-    ultimaPosicaoAlocada = inicio->unidades_memoria;
+
+    if(inicio != NULL) {
+        ultimaPosicaoAlocada = inicio->ender_inicio + tamanho_necessario;
+    }
+
     return inicio;
 }
 
