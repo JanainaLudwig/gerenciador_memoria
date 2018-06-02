@@ -4,7 +4,7 @@
 #include "processos.h"
 #include "memoria.h"
 
-#define VERMELHO "\033[31m"
+#define VERMELHO "\033[33m"
 #define MAGENTA "\033[35m"
 
 typedef struct elementoP {

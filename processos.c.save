@@ -4,7 +4,7 @@
 #include "processos.h"
 #include "memoria.h"
 
-#define VERMELHO "\033[31m"
+#define VERMELHO "\033[33m"
 #define MAGENTA "\033[35m"
 
 typedef struct elementoP {
@@ -64,7 +64,11 @@ void imprimirProcessos(fila_processos* fila) {
     while(no != NULL) {
         if(cor) {
             printf("%s", VERMELHO);
-        } else printf("%s", MAGENTA);
+            cor--;
+        } else {
+            printf("%s", MAGENTA);
+            cor++;
+        }
         printf("\n==========\nProcesso %s\nTamanho: %d\nTempo: %d\n==========", no->dados->nome, no->dados->tempo, no->dados->tamanho);
         printf("\033[0;0m");
         no = no->proximo;

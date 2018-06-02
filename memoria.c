@@ -109,7 +109,7 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario) {
 }
 
 struct elemento* next_fit(lista *li, int tamanho_necessario) {
-    Elemento *inicio = *li, *aux;
+    Elemento *inicio = *li, *aux, *aux2;
     static int ultimaPosicaoAlocada = 0;
 
     if(inicio == NULL) {
@@ -119,10 +119,14 @@ struct elemento* next_fit(lista *li, int tamanho_necessario) {
     while(inicio->proximo != NULL && inicio->proximo->ender_inicio <= ultimaPosicaoAlocada) {
         inicio = inicio->proximo;
     }
+    aux = inicio;
+    aux2 = aux->proximo;
     inicio = first_fit(&inicio, tamanho_necessario);
     if(inicio == NULL) {
-        inicio->proximo = NULL;
+        //Para não percorrer toda a memória (somente o que ainda não foi percorrido)
+        aux->proximo = NULL;
         inicio = first_fit(li, tamanho_necessario);
+        aux->proximo = aux2;
     }
 
     if(inicio != NULL) {
