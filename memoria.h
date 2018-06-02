@@ -24,7 +24,7 @@ struct elemento* worst_fit(lista *li, int tamanho_necessario);
 
 void percorre_memoria(lista *li);
 
-int liberar_processo(lista *li, struct elemento *liberar);
+int liberar_processo(struct elemento *liberar);
 
 //Usado para unir um primeiro elemento livre ao próximo elemento (que deve ser livre)
 void desfragmentar_livres(struct elemento *primeiro);

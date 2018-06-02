@@ -162,7 +162,7 @@ void percorre_memoria(lista *li) {
         if(no->processo != NULL) {
             if(no->processo->tempo == 0) {
                 no->processo = NULL;
-                liberar_processo(li, no);
+                liberar_processo(no);
             } else {
                 no->processo->tempo--;
             }
@@ -172,7 +172,7 @@ void percorre_memoria(lista *li) {
     sleep(1);
 }
 
-int liberar_processo(lista *li, Elemento *liberar) {
+int liberar_processo(Elemento *liberar) {
     free(liberar->processo);
     liberar->processo = NULL;
     //Se existir um elemento antes do que deve ser liberado e ele for livre, une os dois
