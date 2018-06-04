@@ -249,6 +249,7 @@ void desenha_memoria(lista *li) {
     printf("\x1b[0m");//reset cor
     no = no->proximo;
     }
+    setlocale(LC_ALL, "C");
     printf(" %4c%c%c%c%c%c%c%c%c%c\n", 200, 205, 205, 205, 205, 205, 205, 205, 205, 188);
     setlocale(LC_ALL, "");
 }
