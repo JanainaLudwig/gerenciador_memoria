@@ -1,34 +1,35 @@
 # depslib dependency file v1.0
-1527765158 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
+1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<locale.h>
 	<process.h>
 	<conio.h>
-	<windows.h>
-	<unistd.h>
 	"memoria.h"
 	"processos.h"
+	<unistd.h>
+	<windows.h>
 
-1527971597 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
+1529325457 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
 
-1527970655 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
+1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
-	<unistd.h>
 	<conio.h>
 	"memoria.h"
+	<unistd.h>
+	<windows.h>
 
-1527969956 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
+1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"processos.h"
 	"memoria.h"
 
-1527524671 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.h
+1529325457 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.h
 
 1529277367 source:c:\users\alessandro\downloads\gerenciador_memoria\main.c
 	<stdio.h>

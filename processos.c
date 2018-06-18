@@ -4,8 +4,8 @@
 #include "processos.h"
 #include "memoria.h"
 
-#define VERMELHO "\033[33m"
-#define MAGENTA "\033[35m"
+#define AMARELO "\033[35m"
+#define MAGENTA "\033[33m"
 
 typedef struct elementoP {
     Processo *dados;
@@ -63,7 +63,7 @@ void imprimirProcessos(fila_processos* fila) {
     int cor = 0;
     while(no != NULL) {
         if(cor) {
-            printf("%s", VERMELHO);
+            printf("%s", AMARELO);
             cor--;
         } else {
             printf("%s", MAGENTA);
