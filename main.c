@@ -9,10 +9,15 @@ Objetivo: software que simule os algoritmos de alocação de memória para processo
 #include <locale.h>
 #include <process.h>
 #include <conio.h>
-#include <windows.h>
-#include <unistd.h>
 #include "memoria.h"
 #include "processos.h"
+
+#ifdef __unix__
+#include <unistd.h>
+#elif defined _WIN32
+#include <windows.h>
+#define sleep(x) Sleep(1000 * (x))
+#endif
 
 //Controle da impressao da memória
 int imprimir = 1;
@@ -34,7 +39,6 @@ void novoProcessoFila();
 //Percorre a memória, desalocando processos e printando a memória
 void percorreMemoria();
 
-void mgotoxy(int x, int y);
 
 int main(void)
 {
@@ -110,10 +114,6 @@ int main(void)
     return 1;
 }
 
-void mgotoxy(int x, int y) {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),(COORD){x,y});
-}
-
 void novoProcessoFila() {
     char nome[20];
     int tam, tempo;
@@ -129,7 +129,6 @@ void novoProcessoFila() {
         scanf("%d", &tempo);
         novo_processo(processos, nome, tam, tempo);
         fflush(stdin);
-        //mgotoxy(0, 0);
         imprimir = 1;
     }
 }

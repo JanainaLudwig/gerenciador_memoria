@@ -30,3 +30,35 @@
 
 1527524671 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.h
 
+1529277367 source:c:\users\alessandro\downloads\gerenciador_memoria\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<unistd.h>
+	<string.h>
+	<locale.h>
+	<process.h>
+	<conio.h>
+	"memoria.h"
+	"processos.h"
+
+1529275752 c:\users\alessandro\downloads\gerenciador_memoria\memoria.h
+
+1529275752 c:\users\alessandro\downloads\gerenciador_memoria\processos.h
+
+1529275752 source:c:\users\alessandro\downloads\gerenciador_memoria\processos.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"processos.h"
+	"memoria.h"
+
+1529277087 source:c:\users\alessandro\downloads\gerenciador_memoria\memoria.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<unistd.h>
+	<conio.h>
+	<windows.h>
+	"memoria.h"
+
