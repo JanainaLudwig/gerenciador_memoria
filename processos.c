@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 #include "processos.h"
 #include "memoria.h"
 
@@ -69,7 +70,41 @@ void imprimirProcessos(fila_processos* fila) {
             printf("%s", MAGENTA);
             cor++;
         }
-        printf("\n==========\nProcesso %s\nTamanho: %d\nTempo: %d\n==========", no->dados->nome, no->dados->tempo, no->dados->tamanho);
+        printf("\n==========\nProcesso %s\nTamanho: %d\nTempo: %d\n==========", no->dados->nome, no->dados->tamanho, no->dados->tempo);
+        printf("\033[0;0m");
+        no = no->proximo;
+    }
+}
+
+void mgotoxy(int x, int y) {
+     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),(COORD){x,y});
+}
+
+void imprimirProcessosExecucao(fila_processos* fila) {
+    ElementoP *no = malloc(sizeof(ElementoP));
+    no = *fila;
+    int cor = 0;
+    int linha = 0;
+    mgotoxy(100, linha++);
+    printf("FILA DE PROCESSOS");
+    while(no != NULL) {
+        if(cor) {
+            printf("%s", AMARELO);
+            cor--;
+        } else {
+            printf("%s", MAGENTA);
+            cor++;
+        }
+        mgotoxy(100, linha++);
+        printf("===================");
+        mgotoxy(100, linha++);
+        printf("Processo %s", no->dados->nome);
+        mgotoxy(100, linha++);
+        printf("Tamanho: %d", no->dados->tamanho);
+        mgotoxy(100, linha++);
+        printf("Tempo: %d", no->dados->tempo);
+        mgotoxy(100, linha++);
+        printf("===================");
         printf("\033[0;0m");
         no = no->proximo;
     }

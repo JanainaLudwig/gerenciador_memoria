@@ -1,7 +1,7 @@
 /**
  * Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
  * Objetivo: software que simule os algoritmos de alocação de memória para processos
-*/
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,12 +19,18 @@
 #define sleep(x) Sleep(1000 * (x))
 #endif
 
+//Algoritmo escolhido
+char algoritmo[10];
+
 //Controle da impressao da memória
 int imprimir = 1;
 
 //Listas de processos e memória
 lista *memoria;
 fila_processos *processos;
+
+//Processo tentando ser alocado
+Processo *processoRetirado;
 
 //Ponteiro para algoritmo de alocação
 struct elemento* (*algMemoria)(lista *li, int tamanho_necessario);
@@ -39,6 +45,8 @@ void novoProcessoFila();
 //Percorre a memória, desalocando processos e printando a memória
 void percorreMemoria();
 
+//Imprime o processo que está tentando ser alocado
+void imprimeAtual();
 
 int main(void)
 {
@@ -52,6 +60,22 @@ int main(void)
     keybd_event(VK_RETURN,0x1c,0,0);
     keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0);
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
+
+    //ASCII ART
+    char ch;
+	FILE *arq;
+	arq = fopen("art.txt", "r");
+	if(arq == NULL) {
+        printf("GERENDIADOR\nDE\n MEMORIA\n");
+	} else {
+        while((ch=fgetc(arq)) !=  EOF) {
+            putchar(ch);
+        }
+	}
+	fclose(arq);
+
+	system("pause");
+	system("cls");
 
     setlocale(LC_ALL, "");
 
@@ -72,23 +96,28 @@ int main(void)
     switch(aux) {
         case '1':
             algMemoria = first_fit;
-            printf("First fit");
+            strcpy(algoritmo, "First fit");
+            printf("%s", algoritmo);
             break;
         case '2':
             algMemoria = next_fit;
-            printf("Next fit");
+            strcpy(algoritmo, "Next fit");
+            printf("%s", algoritmo);
             break;
         case '3':
             algMemoria = best_fit;
-            printf("Best fit");
+            strcpy(algoritmo, "Best fit");
+            printf("%s", algoritmo);
             break;
         case '4':
             algMemoria = worst_fit;
-            printf("Worst fit");
+            strcpy(algoritmo, "Worst fit");
+            printf("%s", algoritmo);
             break;
         default:
             algMemoria = first_fit;
-            printf("First fit (padrão)");
+            strcpy(algoritmo, "First fit");
+            printf("%s (padrão)", algoritmo);
     }
 
     do {
@@ -157,7 +186,10 @@ void percorreMemoria() {
     while(1) {
         if(imprimir) {
             system("cls");
+            printf("    Algoritmo utilizado: %s\n", algoritmo);
             desenha_memoria(memoria);
+            imprimirProcessosExecucao(processos);
+            imprimeAtual();
         }
         percorre_memoria(memoria);
     }
@@ -167,13 +199,35 @@ void percorreFilaProcessos() {
     int aux;
     while(1) {
         if(!filaVazia(processos)) {
-            Processo *processoRetirado = retira_processo(processos);
+            processoRetirado = retira_processo(processos);
             do {
                 aux = alocar_processo(memoria, processoRetirado, algMemoria);
                 if(aux == 0) {
                     sleep(1);
+                } else {
+                    processoRetirado = NULL;
                 }
             } while(aux == 0);
         }
+    }
+}
+
+void imprimeAtual() {
+    int linha = 0;
+    mgotoxy(60, linha++);
+    printf("PROCESSO SENDO ALOCADO");
+    if(processoRetirado != NULL) {
+        printf("\033[32m");
+        mgotoxy(60, linha++);
+        printf("===================");
+        mgotoxy(60, linha++);
+        printf("Processo %s", processoRetirado->nome);
+        mgotoxy(60, linha++);
+        printf("Tamanho: %d", processoRetirado->tamanho);
+        mgotoxy(60, linha++);
+        printf("Tempo: %d", processoRetirado->tempo);
+        mgotoxy(60, linha++);
+        printf("===================");
+        printf("\033[0;0m");
     }
 }
