@@ -14,12 +14,12 @@
 #define AZUL "\x1b[34m"
 #define VERDE "\x1b[32m"
 
-/*
-PROCESSO: Se o processo == NULL, significa que aquele elemento da memória está livre
-ENDER_INICIO: Indica o primeiro endereço da memória(fictícia) que o elemento pode utilizar
-UNIDADES_MEMORIA: Indica quantas unidades de memória o processo utiliza (necessário quando o espaço de memória é livre-
-- quando está ocupada, já é indicada no processo)
-*/
+/**
+ * PROCESSO: Se o processo == NULL, significa que aquele elemento da memória está livre
+ * ENDER_INICIO: Indica o primeiro endereço da memória(fictícia) que o elemento pode utilizar
+ * UNIDADES_MEMORIA: Indica quantas unidades de memória o processo utiliza (necessário quando o espaço de memória é livre-
+ * - quando está ocupada, já é indicada no processo)
+ */
 typedef struct elemento {
     struct elemento     *anterior;
     Processo            *processo;
@@ -79,7 +79,6 @@ int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elem
         aux->proximo = no;
     }
     aux->processo = process;
-    //printf("Processo alocado!\n");
     return 1;
 }
 

@@ -1,6 +1,6 @@
-/*
-Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
-Objetivo: software que simule os algoritmos de alocação de memória para processos
+/**
+ * Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
+ * Objetivo: software que simule os algoritmos de alocação de memória para processos
 */
 
 #include <stdio.h>
@@ -42,7 +42,7 @@ void percorreMemoria();
 
 int main(void)
 {
-    //Gambiarra para usar cores
+    //Utilização de cores
     printf("\033[22;34m");
     printf("\033[0m");
     system("cls");
@@ -68,21 +68,27 @@ int main(void)
     fflush(stdin);
     printf("Escolha o algoritmo para o gerenciamento de memória:\n1 - First fit\n2 - Next fit\n3 - Best fit\n4 - Worst fit\n");
     aux = getch();
+    printf("\nAlgoritmo: ");
     switch(aux) {
         case '1':
             algMemoria = first_fit;
+            printf("First fit");
             break;
         case '2':
             algMemoria = next_fit;
+            printf("Next fit");
             break;
         case '3':
             algMemoria = best_fit;
+            printf("Best fit");
             break;
         case '4':
             algMemoria = worst_fit;
+            printf("Worst fit");
             break;
         default:
             algMemoria = first_fit;
+            printf("First fit (padrão)");
     }
 
     do {

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
+1529435339 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -13,7 +13,7 @@
 
 1529325457 c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.h
 
-1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
+1529434684 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\memoria.c
 	<stdio.h>
 	<stdlib.h>
 	<locale.h>
@@ -22,7 +22,7 @@
 	<unistd.h>
 	<windows.h>
 
-1529325457 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
+1529326323 source:c:\users\janai\desktop\universidade tecnológica federal do paraná\3º semestre\estrutura de dados\gerenciador_memoria\processos.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

@@ -1,6 +1,6 @@
-/*
-Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
-Objetivo: software que simule os algoritmos de alocação de memória para processos
+/**
+ * Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
+ * Objetivo: software que simule os algoritmos de alocação de memória para processos
 */
 
 #include <stdio.h>
@@ -9,10 +9,15 @@ Objetivo: software que simule os algoritmos de alocação de memória para processo
 #include <locale.h>
 #include <process.h>
 #include <conio.h>
-#include <windows.h>
-#include <unistd.h>
 #include "memoria.h"
 #include "processos.h"
+
+#ifdef __unix__
+#include <unistd.h>
+#elif defined _WIN32
+#include <windows.h>
+#define sleep(x) Sleep(1000 * (x))
+#endif
 
 //Controle da impressao da memória
 int imprimir = 1;
@@ -34,11 +39,10 @@ void novoProcessoFila();
 //Percorre a memória, desalocando processos e printando a memória
 void percorreMemoria();
 
-void mgotoxy(int x, int y);
 
 int main(void)
 {
-    //Gambiarra para usar cores
+    //Utilização de cores
     printf("\033[22;34m");
     printf("\033[0m");
     system("cls");
@@ -64,21 +68,27 @@ int main(void)
     fflush(stdin);
     printf("Escolha o algoritmo para o gerenciamento de memória:\n1 - First fit\n2 - Next fit\n3 - Best fit\n4 - Worst fit\n");
     aux = getch();
+    printf("\nAlgoritmo: ");
     switch(aux) {
         case '1':
             algMemoria = first_fit;
+            printf("First fit");
             break;
         case '2':
             algMemoria = next_fit;
+            printf("Next fit");
             break;
         case '3':
             algMemoria = best_fit;
+            printf("Best fit");
             break;
         case '4':
             algMemoria = worst_fit;
+            printf("Worst fit");
             break;
         default:
             algMemoria = first_fit;
+            printf("First fit (padrão)");
     }
 
     do {
@@ -110,10 +120,6 @@ int main(void)
     return 1;
 }
 
-void mgotoxy(int x, int y) {
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),(COORD){x,y});
-}
-
 void novoProcessoFila() {
     char nome[20];
     int tam, tempo;
@@ -129,7 +135,6 @@ void novoProcessoFila() {
         scanf("%d", &tempo);
         novo_processo(processos, nome, tam, tempo);
         fflush(stdin);
-        //mgotoxy(0, 0);
         imprimir = 1;
     }
 }
@@ -138,7 +143,7 @@ void iniciarFilaProcessos() {
     char nome[20];
     int tam, tempo;
 
-    printf("Nome do processo: ");
+    printf("\nNome do processo: ");
     scanf(" %[^\n]s", nome);
     printf("Tamanho do processo: ");
     scanf("%d", &tam);
@@ -172,13 +177,3 @@ void percorreFilaProcessos() {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
