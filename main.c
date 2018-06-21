@@ -1,5 +1,5 @@
 /**
- * Integrantes: Janaina Ludwig e Alessandro Gambin da Silva
+ * Integrantes: Janaina Ludwig (1932802) e Alessandro Gambin da Silva (1930648)
  * Objetivo: software que simule os algoritmos de alocação de memória para processos
  */
 
@@ -66,14 +66,14 @@ int main(void)
 	FILE *arq;
 	arq = fopen("art.txt", "r");
 	if(arq == NULL) {
-        printf("GERENDIADOR\nDE\n MEMORIA\n");
+        printf("GERENCIADOR DE MEMORIA\n");
 	} else {
         while((ch=fgetc(arq)) !=  EOF) {
             putchar(ch);
         }
 	}
 	fclose(arq);
-
+    printf("\n\nDesenvolvido por Janaina Ludwig e Alessandro Gambin da Silva\n\n");
 	system("pause");
 	system("cls");
 

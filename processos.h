@@ -1,3 +1,7 @@
+/**
+ * Integrantes: Janaina Ludwig (1932802) e Alessandro Gambin da Silva (1930648)
+ */
+
 typedef struct processo_dados Processo;
 
 typedef struct elementoP* fila_processos;

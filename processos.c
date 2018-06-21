@@ -1,3 +1,7 @@
+/**
+ * Integrantes: Janaina Ludwig (1932802) e Alessandro Gambin da Silva (1930648)
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

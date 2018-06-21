@@ -1,3 +1,7 @@
+/**
+ * Integrantes: Janaina Ludwig (1932802) e Alessandro Gambin da Silva (1930648)
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -55,8 +59,6 @@ int alocar_processo(lista *li, Processo *process, struct elemento* (*buscar_elem
     //Auxiliar receberá o elemento no qual o processo deve ser alocado
     Elemento *aux = buscar_elemento(li, process->tamanho);
     if(aux == NULL) {
-        //printf("Não há memória suficiente... Aguarde!\n");
-        //sleep(1);
         return 0;
     }
     //Se o processo utilizar menos quantidade de memória do que está livre, o elemento é fragmentado, mantendo parte da memória livre
@@ -242,7 +244,9 @@ void desenha_memoria(lista *li) {
                if(i == (int) (no->unidades_memoria-1)/2) {
                     setlocale(LC_ALL, "");
                     printf("  %s\tTempo: %d", no->processo->nome, no->processo->tempo);
-                    if(no->processo->tempo == 0) printf(" DESALOCANDO...\n");
+                    if(no->processo->tempo == 0) {
+                        printf(" DESALOCANDO...\n");
+                    }
                     else printf("\n");
                } else {
                     printf("\n");

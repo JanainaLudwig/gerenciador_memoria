@@ -1,3 +1,7 @@
+/**
+ * Integrantes: Janaina Ludwig (1932802) e Alessandro Gambin da Silva (1930648)
+ */
+
 int MEMORIA_MAX;
 
 typedef struct processo_dados {
